@@ -1,0 +1,109 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="using:NBAScore.ViewModels"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="NBAScore.Views.MainWindow"
+        Icon="/Assets/avalonia-logo.ico"
+        Title="NBA Score"
+		FontFamily="OCR A">
+	
+	<Border Padding="25">
+		
+		<Grid Background="Blue" 
+			  ColumnDefinitions="*,*" 
+			  RowDefinitions="*,Auto,Auto,Auto,*,*,*">
+			
+			<!--Title TextBlock-->
+			<TextBlock Text="{Binding Title}"
+					   HorizontalAlignment="Center"
+					   VerticalAlignment="Top"
+					   Margin="10"
+					   Width="475"
+					   FontSize="32"
+					   FontWeight="Bold"
+					   Grid.Row="0"
+					   Grid.ColumnSpan="2"/>
+
+			<!--SubTitle TextBlock-->
+			<TextBlock Text="{Binding SubTitle}"
+					   HorizontalAlignment="Center"
+					   VerticalAlignment="Center"
+					   FontWeight="DemiBold"
+					   TextBlock.Foreground="#00FE01"
+					   Margin="10"
+					   Width="555"
+					   FontSize="20"
+					   Grid.Row="0"
+					   Grid.ColumnSpan="2"/>
+
+			<!--ComboBox Header-->
+			<TextBlock Text="{Binding TeamSelectionHeader}"
+					   FontSize="18"
+					   Grid.Row="1"
+					   Grid.Column="0"
+					   HorizontalAlignment="Center"/>
+
+			<!--ComboBox to show all teams-->
+			<ComboBox x:Name="teamComboBox"
+					  SelectedIndex="0" 
+					  FontSize="14"
+					  Items="{Binding AllTeams}" 
+					  SelectionChanged="TeamSelected" 
+					  Grid.Row="2"
+					  Grid.Column="0"
+					  Width="240"
+					  HorizontalAlignment="Center">
+				<ComboBox.ItemTemplate>
+					<DataTemplate>
+						<TextBlock Text="{Binding fullName}"/>
+					</DataTemplate>
+				</ComboBox.ItemTemplate>
+			</ComboBox>
+
+			<!--CalendarDatePicker header-->
+			<TextBlock Text="{Binding DateSelectionHeader}"
+					   FontSize="18"
+					   Grid.Row="1"
+					   Grid.Column="1"
+					   HorizontalAlignment="Center"/>
+			
+			<!--CalendarDatePicker for match-->
+			<CalendarDatePicker Name="DatePicker"
+								SelectedDateChanged="DateSelected"
+								Grid.Row="2"
+								Grid.Column="1"
+								HorizontalAlignment="Center"
+								Width="175"></CalendarDatePicker>
+
+			<!--Button to query matches-->
+			<Button Click="ButtonClicked"
+					Grid.Row="3"
+					Grid.ColumnSpan="2"
+					HorizontalAlignment="Center"
+					FontSize="20">Get Game</Button>
+
+			<!--DataGrid to show the scoreboard of last 14 days-->
+			<DataGrid Name="scoreDataGrid" 
+					  Margin="30, 25, 30, 30" 
+					  TextBlock.Foreground="Black"
+					  CanUserResizeColumns="False" 
+					  CanUserReorderColumns="True"
+					  Background="DarkGray"
+					  Items="{Binding Games}" 
+					  Grid.Row="4"
+					  Grid.RowSpan="3"
+					  Grid.ColumnSpan="2"
+					  HorizontalAlignment="Center">
+				<DataGrid.Columns>
+					<DataGridTextColumn FontSize="18" Header="Date" Binding="{Binding date}" Width="2*" />
+					<DataGridTextColumn FontSize="18" Header="Home Team" Binding="{Binding homeTeam.fullName}" Width="5*" />
+					<DataGridTextColumn FontSize="20" FontWeight="DemiBold" Header="Home Score" Binding="{Binding homeTeamScore}" Width="1.8*" />
+					<DataGridTextColumn FontSize="20" FontWeight="DemiBold" Header="Away Score" Binding="{Binding awayTeamScore}" Width="1.8*" />
+					<DataGridTextColumn FontSize="18" Header="Away Team" Binding="{Binding awayTeam.fullName}" Width="5*" />
+				</DataGrid.Columns>
+			</DataGrid>
+		</Grid>
+	</Border>
+</Window>
