@@ -7,11 +7,9 @@ namespace NBAScore.Models
     {
         [JsonProperty("id")]
         public int id { get; set; }
-
         [JsonProperty("date")]
         public DateTime date { get; set; }
         [JsonProperty("home_team")]
-
         public Team? homeTeam { get; set; }
         [JsonProperty("home_team_score")]
         public int homeTeamScore { get; set; }
